@@ -8,13 +8,13 @@ import java.net.InetAddress;
 /**
  * Created by Harald on 13.01.2016.
  */
-public class Multiplayer extends Thread {
+public class ClientConnection extends Thread {
 
   private static final int PORT = 6767;
   DatagramSocket socket;
   InetAddress ipAddress;
 
-  public Multiplayer(String ipAddress) {
+  public ClientConnection(String ipAddress) {
     try {
       socket = new DatagramSocket(PORT);
       this.ipAddress = InetAddress.getByName(ipAddress);
@@ -32,7 +32,7 @@ public class Multiplayer extends Thread {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      System.out.println("Client > " + new String(packet.getData()));
+      System.out.println("SERVER > " + new String(packet.getData()));
     }
   }
 
