@@ -7,23 +7,22 @@ import java.io.InputStreamReader;
 /**
  * Created by Harald on 14.1.16.
  */
-public class ServerLauncher {
+public class Shell implements Runnable {
 
+  private Server server;
 
-  private ServerLauncher() {
+  public Shell(Server server) {
+    this.server = server;
   }
 
-  public static void runServer() {
+  @Override
+  public void run() {
     boolean running = true;
-    ClientConnection con = new ClientConnection("127.0.0.1");
-    Server server = new Server();
-    new Thread(server).start();
     BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     while (running) {
       String line = null;
       try {
         line = in.readLine().trim();
-        System.out.println(line);
         if (line.equalsIgnoreCase("stop") || line.equalsIgnoreCase("quit")) {
           server.stopServer();
           running = false;

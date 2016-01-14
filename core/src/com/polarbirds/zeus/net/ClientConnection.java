@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 /**
  * Created by Harald on 13.01.2016.
@@ -18,7 +20,9 @@ public class ClientConnection extends Thread {
     try {
       socket = new DatagramSocket(PORT);
       this.ipAddress = InetAddress.getByName(ipAddress);
-    } catch (IOException e) {
+    }catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (SocketException e) {
       e.printStackTrace();
     }
   }

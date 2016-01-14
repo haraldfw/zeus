@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.polarbirds.zeus.net.ClientConnection;
+import com.polarbirds.zeus.net.Server;
 
 public class ZeusGame extends ApplicationAdapter {
 

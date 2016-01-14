@@ -1,9 +1,11 @@
 package com.polarbirds.zeus.net;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 
 /**
  * Created by Harald on 14.1.16.
@@ -14,10 +16,13 @@ public class Server implements Runnable {
   private DatagramSocket socket;
   private boolean running = true;
 
-  public Server() {
+  public Server(boolean createLocalShell) {
+    if (createLocalShell) {
+      new Thread(new Shell(this)).start();
+    }
     try {
       socket = new DatagramSocket(PORT);
-    } catch (IOException e) {
+    } catch (SocketException e) {
       e.printStackTrace();
     }
     System.out.println("Server started");
@@ -27,13 +32,16 @@ public class Server implements Runnable {
     while (running) {
       byte[] data = new byte[1024];
       DatagramPacket packet = new DatagramPacket(data, data.length);
-      System.out.println("CLIENT > ");
       try {
         socket.receive(packet);
       } catch (IOException e) {
-        e.printStackTrace();
+        if(socket.isClosed()) {
+          System.out.println("Socket closed");
+          break;
+        } else {
+          e.printStackTrace();
+        }
       }
-      System.out.println("CLIENT > ");
       String msg = new String(packet.getData());
       if (msg.trim().equalsIgnoreCase("ping")) {
         sendData("pong".getBytes(), packet.getAddress());
@@ -45,6 +53,7 @@ public class Server implements Runnable {
 
   public void stopServer() {
     running = false;
+    socket.close();
   }
 
   public void sendData(byte[] data, InetAddress ipAddress) {
