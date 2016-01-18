@@ -18,7 +18,7 @@ public class ClientConnection extends Thread {
 
   public ClientConnection(String ipAddress) {
     try {
-      socket = new DatagramSocket(PORT);
+      socket = new DatagramSocket();
       this.ipAddress = InetAddress.getByName(ipAddress);
     }catch (UnknownHostException e) {
       e.printStackTrace();

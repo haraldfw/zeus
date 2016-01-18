@@ -1,11 +1,11 @@
 package com.polarbirds.zeus.net;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 /**
  * Created by Harald on 14.1.16.
@@ -13,8 +13,10 @@ import java.net.SocketException;
 public class Server implements Runnable {
 
   private static final int PORT = 6767;
+  public static final int appID = 1947;
   private DatagramSocket socket;
   private boolean running = true;
+  private ArrayList<InetAddress> connectedIPs;
 
   public Server(boolean createLocalShell) {
     if (createLocalShell) {
@@ -35,7 +37,7 @@ public class Server implements Runnable {
       try {
         socket.receive(packet);
       } catch (IOException e) {
-        if(socket.isClosed()) {
+        if (socket.isClosed()) {
           System.out.println("Socket closed");
           break;
         } else {
