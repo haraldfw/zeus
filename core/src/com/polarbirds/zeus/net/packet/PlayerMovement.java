@@ -9,14 +9,9 @@ public class PlayerMovement extends Packet {
   public float newX;
   public float newY;
 
-  public PlayerMovement(String msg) {
-    String[] comps = msg.split(",");
-    if (comps.length != 3) {
-      valid = false;
-    } else {
-      username = comps[0];
-      newX = Float.parseFloat(comps[1]);
-      newY = Float.parseFloat(comps[2]);
-    }
+  public PlayerMovement(String username, float newX, float newY) {
+    this.username = username;
+    this.newX = newX;
+    this.newY = newY;
   }
 }

@@ -5,7 +5,9 @@ package com.polarbirds.zeus.net.packet;
  */
 public class Invalid extends Packet {
 
-  public Invalid() {
-    valid = false;
+  String msg;
+
+  public Invalid(String msg) {
+    this.msg = msg;
   }
 }

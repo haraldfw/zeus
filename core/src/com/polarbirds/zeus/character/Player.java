@@ -1,11 +1,18 @@
 package com.polarbirds.zeus.character;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by Harald on 13.01.2016.
  */
 public class Player {
+
+  private static Sprite sprite =
+      new Sprite(new Texture(Gdx.files.internal("player.png")));
 
   public Vector2 pos;
   public Vector2 vel;
@@ -25,6 +32,11 @@ public class Player {
     force.setZero();
     vel.mulAdd(acc, delta);
     pos.mulAdd(vel, delta);
+  }
+
+  public void draw(SpriteBatch sb) {
+    sprite.setPosition(pos.x, pos.y);
+    sprite.draw(sb);
   }
 
   public void push(Vector2 force) {
