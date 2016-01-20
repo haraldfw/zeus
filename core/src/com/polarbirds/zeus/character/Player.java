@@ -13,12 +13,12 @@ import com.polarbirds.zeus.input.AInputProcessor;
 public class Player {
 
   private static Sprite sprite =
-      new Sprite(new Texture(Gdx.files.internal("player.png")));
+      new Sprite(new Texture("data/player.png"));
 
   public Vector2 pos;
-  public Vector2 vel;
-  public Vector2 acc;
-  public Vector2 force;
+  public Vector2 vel = new Vector2();
+  public Vector2 acc = new Vector2();
+  public Vector2 force = new Vector2();
   public float invmass = 1;
 
   public final AInputProcessor input;

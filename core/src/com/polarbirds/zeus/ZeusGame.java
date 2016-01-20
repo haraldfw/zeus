@@ -1,9 +1,14 @@
 package com.polarbirds.zeus;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.polarbirds.zeus.character.Player;
+import com.polarbirds.zeus.input.Keyboard;
 import com.polarbirds.zeus.net.ClientConnection;
 import com.polarbirds.zeus.world.World;
 
@@ -21,9 +26,18 @@ public class ZeusGame extends Game {
   Texture img;
   World world;
   Player player;
+  OrthographicCamera camera;
+
 
   @Override
   public void create() {
+    sb = new SpriteBatch();
+    camera = new OrthographicCamera();
+    camera.setToOrtho(false, X_TILES, Y_TILES);
+    camera.position.set(X_TILES / 2, Y_TILES / 2, 0);
+    world = new World();
+    Player player = new Player(new Keyboard(camera), new Vector2(0, 0), "Harald");
+    world.addPlayer(player);
     ClientConnection mp = new ClientConnection("127.0.0.1");
   }
 
@@ -31,6 +45,15 @@ public class ZeusGame extends Game {
   public void render() {
     float delta = 1f / 60f;
     world.tick(delta);
+    Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+    Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+    camera.translate(player.pos);
+    sb.begin();
     world.draw(sb);
+    sb.end();
+  }
+
+  private void renderChat() {
+
   }
 }

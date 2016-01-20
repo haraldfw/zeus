@@ -12,6 +12,10 @@ public class World {
 
   public ArrayList<Player> connectedPlayers;
 
+  public World() {
+    connectedPlayers = new ArrayList<>();
+  }
+
   public void addPlayer(Player player) {
     connectedPlayers.add(player);
   }
