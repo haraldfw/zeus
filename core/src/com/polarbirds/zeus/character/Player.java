@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.polarbirds.zeus.input.AInputProcessor;
 
 /**
  * Created by Harald on 13.01.2016.
@@ -20,9 +21,12 @@ public class Player {
   public Vector2 force;
   public float invmass = 1;
 
+  public final AInputProcessor input;
+
   public String username;
 
-  public Player(Vector2 pos, String username) {
+  public Player(AInputProcessor input, Vector2 pos, String username) {
+    this.input = input;
     this.pos = pos;
     this.username = username;
   }
