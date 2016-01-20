@@ -25,6 +25,7 @@ public abstract class AInputProcessor implements IMotiveProcessor {
     String quick2 = "quick2";
     String quick3 = "quick3";
     String quick4 = "quick4";
+    String chat = "chat";
 
     shouldToggle = new HashMap<>();
     shouldToggle.put(attack1, true);
@@ -37,6 +38,7 @@ public abstract class AInputProcessor implements IMotiveProcessor {
     shouldToggle.put(quick2, true);
     shouldToggle.put(quick3, true);
     shouldToggle.put(quick4, true);
+    shouldToggle.put(chat, true);
 
     isPressed = new HashMap<>();
     isPressed.put(attack1, false);
@@ -49,6 +51,7 @@ public abstract class AInputProcessor implements IMotiveProcessor {
     isPressed.put(quick2, false);
     isPressed.put(quick3, false);
     isPressed.put(quick4, false);
+    isPressed.put(chat, false);
   }
 
   @Override

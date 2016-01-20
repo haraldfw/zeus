@@ -31,6 +31,7 @@ public final class Keyboard extends AInputProcessor {
     keys.put("quick2", Input.Keys.NUM_2);
     keys.put("quick3", Input.Keys.NUM_3);
     keys.put("quick4", Input.Keys.NUM_4);
+    keys.put("chat", Input.Keys.ENTER);
     return keys;
   }
 
