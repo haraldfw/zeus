@@ -21,15 +21,15 @@ public class Packet {
       Packet getPacket(String msg) {
         String[] args = msg.substring(6).split(",");
         if (args.length != 3) {
-          return new Invalid("Invalid number of arguments for PlayerMovement-packet");
+          return new Invalid("Invalid number of arguments for PlayerState-packet");
         } else {
           String username = args[0];
           try {
             float newX = Float.parseFloat(args[1]);
             float newY = Float.parseFloat(args[2]);
-            return new PlayerMovement(username, newX, newY);
+            return new PlayerState(username, newX, newY);
           } catch (NumberFormatException e) {
-            return new Invalid("Error in types or order of arguments for PlayerMovement-packet.");
+            return new Invalid("Error in types or order of arguments for PlayerState-packet.");
           }
         }
       }
