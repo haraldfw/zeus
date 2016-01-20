@@ -24,6 +24,7 @@ public class Physics {
   public void tick(float delta) {
     for (Player p : players) {
       p.tick(delta);
+
     }
   }
 }
