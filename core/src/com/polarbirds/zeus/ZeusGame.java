@@ -28,7 +28,6 @@ public class ZeusGame extends Game {
   Player player;
   OrthographicCamera camera;
 
-
   @Override
   public void create() {
     sb = new SpriteBatch();
@@ -36,7 +35,7 @@ public class ZeusGame extends Game {
     camera.setToOrtho(false, X_TILES, Y_TILES);
     camera.position.set(X_TILES / 2, Y_TILES / 2, 0);
     world = new World();
-    Player player = new Player(new Keyboard(camera), new Vector2(0, 0), "Harald");
+    player = new Player(new Keyboard(camera), new Vector2(0, 0), "Harald");
     world.addPlayer(player);
     ClientConnection mp = new ClientConnection("127.0.0.1");
   }

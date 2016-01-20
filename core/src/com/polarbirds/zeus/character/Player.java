@@ -1,6 +1,5 @@
 package com.polarbirds.zeus.character;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,17 +11,13 @@ import com.polarbirds.zeus.input.AInputProcessor;
  */
 public class Player {
 
-  private static Sprite sprite =
-      new Sprite(new Texture("data/player.png"));
-
+  private static Sprite sprite = new Sprite(new Texture("data/player.png"));
+  public final AInputProcessor input;
   public Vector2 pos;
   public Vector2 vel = new Vector2();
   public Vector2 acc = new Vector2();
   public Vector2 force = new Vector2();
   public float invmass = 1;
-
-  public final AInputProcessor input;
-
   public String username;
 
   public Player(AInputProcessor input, Vector2 pos, String username) {
