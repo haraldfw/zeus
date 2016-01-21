@@ -60,4 +60,13 @@ public enum PacketType {
     }
     return new Invalid("Invalid packet ID: " + id);
   }
+
+  public static PacketType getType(int id) {
+    for (PacketType p : PacketType.values()) {
+      if (p.ordinal() == id) {
+        return p;
+      }
+    }
+    return PacketType.INVALID;
+  }
 }
