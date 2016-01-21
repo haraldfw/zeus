@@ -1,12 +1,11 @@
 package com.polarbirds.zeus.desktop;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.polarbirds.zeus.ZeusGame;
 import com.polarbirds.zeus.net.Server;
 import com.polarbirds.zeus.net.packet.Packet;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.BitSet;
 
 public class DesktopLauncher {
 
@@ -17,9 +16,6 @@ public class DesktopLauncher {
     config.backgroundFPS = 60;
     config.useGL30 = true;
     new LwjglApplication(new ZeusGame(), config);*/
-    byte[] bb = ByteBuffer.allocate(4).putInt(Packet.PacketType.LOGIN.ordinal()).array();
-    for(byte b : bb) {
-      System.out.println(b);
-    }
+    System.out.println(Integer.toBinaryString(Packet.PacketType.LOGIN.ordinal()));
   }
 }

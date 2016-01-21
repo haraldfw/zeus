@@ -1,11 +1,17 @@
 package com.polarbirds.zeus.net.packet;
 
-import java.nio.ByteBuffer;
-
 /**
  * Created by Harald on 13.01.2016.
  */
 public abstract class Packet {
+
+  public PacketType type;
+
+  public Packet(PacketType type) {
+    this.type = type;
+  }
+
+  public abstract byte[] getData();
 
   public enum PacketType {
     INVALID(0) {
@@ -54,11 +60,5 @@ public abstract class Packet {
       }
       return new Invalid("Invalid packet ID: " + id);
     }
-  }
-
-  public PacketType type;
-
-  public byte[] getdata() {
-    return ByteBuffer.allocate(4).putInt(type.ordinal()).array();
   }
 }

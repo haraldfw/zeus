@@ -16,7 +16,7 @@ public class PlayerState extends Packet {
   }
 
   @Override
-  public byte[] getdata() {
+  public byte[] getData() {
     return new byte[0];
   }
 }
