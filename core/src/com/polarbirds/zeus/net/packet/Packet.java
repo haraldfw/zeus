@@ -1,11 +1,13 @@
 package com.polarbirds.zeus.net.packet;
 
+import java.nio.ByteBuffer;
+
 /**
  * Created by Harald on 13.01.2016.
  */
-public class Packet {
+public abstract class Packet {
 
-  public enum PacketId {
+  public enum PacketType {
     INVALID(0) {
       @Override
       Packet getPacket(String msg) {
@@ -33,12 +35,11 @@ public class Packet {
           }
         }
       }
-
     };
 
-    int id;
+    public int id;
 
-    PacketId(int id) {
+    PacketType(int id) {
       this.id = id;
     }
 
@@ -46,12 +47,18 @@ public class Packet {
 
     public static Packet parsePacket(String msg) {
       int id = Integer.parseInt(msg.substring(4, 6));
-      for (PacketId pid : PacketId.values()) {
+      for (PacketType pid : PacketType.values()) {
         if (pid.id == id) {
           return pid.getPacket(msg);
         }
       }
       return new Invalid("Invalid packet ID: " + id);
     }
+  }
+
+  public PacketType type;
+
+  public byte[] getdata() {
+    return ByteBuffer.allocate(4).putInt(type.ordinal()).array();
   }
 }

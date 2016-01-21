@@ -14,4 +14,9 @@ public class PlayerState extends Packet {
     this.newX = newX;
     this.newY = newY;
   }
+
+  @Override
+  public byte[] getdata() {
+    return new byte[0];
+  }
 }
