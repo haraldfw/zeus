@@ -47,6 +47,7 @@ public class ZeusGame extends Game {
     Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
     Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
     camera.translate(player.pos);
+    camera.update();
     sb.begin();
     world.draw(sb);
     sb.end();
