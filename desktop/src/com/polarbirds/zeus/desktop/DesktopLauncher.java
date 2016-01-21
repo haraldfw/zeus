@@ -1,11 +1,7 @@
 package com.polarbirds.zeus.desktop;
 
 import com.polarbirds.zeus.net.Server;
-import com.polarbirds.zeus.net.packet.Packet;
-
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.BitSet;
+import com.polarbirds.zeus.net.Packet;
 
 public class DesktopLauncher {
 
