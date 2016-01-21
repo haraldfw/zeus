@@ -20,7 +20,7 @@ public class ClientConnection extends Thread {
     try {
       socket = new DatagramSocket();
       this.ipAddress = InetAddress.getByName(ipAddress);
-    }catch (UnknownHostException e) {
+    } catch (UnknownHostException e) {
       e.printStackTrace();
     } catch (SocketException e) {
       e.printStackTrace();

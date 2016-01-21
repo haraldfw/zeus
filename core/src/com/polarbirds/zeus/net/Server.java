@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class Server implements Runnable {
 
-  private static final int PORT = 6767;
   public static final int appID = 1947;
+  private static final int PORT = 6767;
   private DatagramSocket socket;
   private boolean running = true;
   private ArrayList<InetAddress> connectedIPs;
