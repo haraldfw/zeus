@@ -4,23 +4,25 @@ import com.polarbirds.zeus.net.packets.Invalid;
 import com.polarbirds.zeus.net.packets.Login;
 import com.polarbirds.zeus.net.packets.PlayerState;
 
+import java.util.BitSet;
+
 /**
  * Created by haraldfw on 1/21/16.
  */
 public enum PacketType {
   INVALID(0) {
     @Override
-    Packet getPacket(String msg) {
-      return new Invalid(msg);
+    Packet getPacket(BitSet bits) {
+      return new Invalid(bits);
     }
   }, LOGIN(1) {
     @Override
-    Packet getPacket(String msg) {
+    Packet getPacket(BitSet bits) {
       return new Login(msg.substring(6));
     }
   }, PLAYER_STATE(2) {
     @Override
-    Packet getPacket(String msg) {
+    Packet getPacket(BitSet bits) {
       String[] args = msg.substring(6).split(",");
       if (args.length != 3) {
         return new Invalid("Invalid number of arguments for PlayerState-packet");
@@ -38,7 +40,7 @@ public enum PacketType {
   },
   CHAT_MESSAGE(3) {
     @Override
-    Packet getPacket(String msg) {
+    Packet getPacket(BitSet bits) {
       return null;
     }
   };
@@ -49,13 +51,13 @@ public enum PacketType {
     this.id = id;
   }
 
-  abstract Packet getPacket(String msg);
+  abstract Packet getPacket(BitSet bits);
 
-  public static Packet parsePacket(String msg) {
-    int id = Integer.parseInt(msg.substring(4, 6));
+  public static Packet parsePacket(BitSet bits) {
+    int id = bits.
     for (PacketType pid : PacketType.values()) {
       if (pid.id == id) {
-        return pid.getPacket(msg);
+        return pid.getPacket(bits);
       }
     }
     return new Invalid("Invalid packet ID: " + id);
