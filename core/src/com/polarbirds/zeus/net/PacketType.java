@@ -18,12 +18,12 @@ public enum PacketType {
   }, LOGIN(1) {
     @Override
     Packet getPacket(BitSet bits) {
-      return new Login(msg.substring(6));
+      return new Login(bits);
     }
   }, PLAYER_STATE(2) {
     @Override
     Packet getPacket(BitSet bits) {
-      String[] args = msg.substring(6).split(",");
+      String[] args = new String[0];
       if (args.length != 3) {
         return new Invalid("Invalid number of arguments for PlayerState-packet");
       } else {
@@ -54,7 +54,7 @@ public enum PacketType {
   abstract Packet getPacket(BitSet bits);
 
   public static Packet parsePacket(BitSet bits) {
-    int id = bits.
+    int id = (int) bits.get(32, 33).toLongArray()[0];
     for (PacketType pid : PacketType.values()) {
       if (pid.id == id) {
         return pid.getPacket(bits);

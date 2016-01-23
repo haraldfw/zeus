@@ -74,14 +74,16 @@ public abstract class AInputProcessor implements IMotiveProcessor {
     return getButton("interact");
   }
 
-  @Override
   public final boolean toggleMenu() {
     return getButton("menu");
   }
 
-  @Override
   public final boolean pause() {
     return getButton("pause");
+  }
+
+  public final boolean chat() {
+    return getButton("chat");
   }
 
   @Override

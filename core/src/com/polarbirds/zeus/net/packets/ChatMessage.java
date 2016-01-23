@@ -10,7 +10,7 @@ import java.util.BitSet;
  */
 public class ChatMessage extends Packet {
 
-  public ChatMessage() {
+  public ChatMessage(BitSet btis) {
     super(PacketType.CHAT_MESSAGE);
   }
 

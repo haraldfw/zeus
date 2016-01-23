@@ -22,9 +22,5 @@ public interface IMotiveProcessor {
 
   boolean interact();
 
-  boolean pause();
-
-  boolean toggleMenu();
-
   void update();
 }

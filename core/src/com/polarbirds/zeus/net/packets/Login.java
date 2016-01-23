@@ -10,11 +10,8 @@ import java.util.BitSet;
  */
 public class Login extends Packet {
 
-  public final String username;
-
-  public Login(String username) {
+  public Login(BitSet bits) {
     super(PacketType.LOGIN);
-    this.username = username;
   }
 
   @Override
