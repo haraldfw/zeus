@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.polarbirds.zeus.character.Player;
 import com.polarbirds.zeus.input.Keyboard;
 import com.polarbirds.zeus.net.ClientConnection;
@@ -30,6 +31,7 @@ public class ZeusGame extends Game {
   OrthographicCamera camera;
   NotificationWindow notif;
   Keyboard kb;
+  Stage scene;
 
   @Override
   public void create() {
@@ -43,6 +45,7 @@ public class ZeusGame extends Game {
     world.addPlayer(player);
     ClientConnection mp = new ClientConnection("127.0.0.1");
     notif = new NotificationWindow(kb);
+    scene = new Stage(camera.view.);
   }
 
   @Override
