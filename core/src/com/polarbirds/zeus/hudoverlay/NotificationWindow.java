@@ -4,9 +4,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.polarbirds.zeus.ZeusGame;
 import com.polarbirds.zeus.input.AInputProcessor;
+import com.polarbirds.zeus.input.Focus;
+import com.polarbirds.zeus.input.Keyboard;
 
 import java.util.ArrayList;
 
@@ -15,62 +16,67 @@ import java.util.ArrayList;
  */
 public class NotificationWindow {
 
-  BitmapFont font;
-  AInputProcessor input;
-  public boolean chatFocus = false;
-
   static final int TIME_MSG_NEW = 2500;
   static final int MAX_MSG_SIZE = 500;
   static final int MAX_LIST_SIZE = 10;
   static final int CHAT_INACTIVE_SHOW_ITEMS = 5;
-
   static final float X_SHIFT = 1;
   static final float Y_SHIFT = 1;
   static final float LINE_HEIGHT = 0.5f;
-
+  BitmapFont font;
+  AInputProcessor input;
   ArrayList<Notification> notifications;
 
   TextField textField;
 
-  public NotificationWindow(AInputProcessor input) {
+  ZeusGame game;
+
+  public NotificationWindow(Keyboard input, ZeusGame game) {
     this.input = input;
+    this.game = game;
     FreeTypeFontGenerator fg = new FreeTypeFontGenerator(new FileHandle("data/font.ttf"));
     font = fg.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter());
     notifications = new ArrayList<>();
-    TextField.TextFieldStyle style = new TextField.TextFieldStyle();
-    style.font = font;
-    textField = new TextField("", style);
-    textField.setPosition(10, 10);
+    textField = new TextField(font, input, game);
     addMsg("Notification-window started successfully");
   }
 
-  public boolean update() {
+  public void update() {
     if (input.chat()) {
-      if (chatFocus) {
-        chatFocus = false;
-        addMsg("Chat closed!");
+      if (game.focus == Focus.CHAT) {
+        String text = textField.getText().trim();
+          addMsg("you: " + text);
+          textField.clearText();
+        }
+        game.setFocus(Focus.GAME);
       } else {
-        chatFocus = true;
-        addMsg("Chat opened!");
+        game.setFocus(Focus.CHAT);
       }
     }
-    return chatFocus;
   }
 
   public void render(SpriteBatch spriteBatch) {
+    boolean chatFocus = game.focus == Focus.CHAT;
     for (int i = 0; i < notifications.size(); i++) {
-      if (!chatFocus && i >= CHAT_INACTIVE_SHOW_ITEMS) break;
+      if (!chatFocus && i >= CHAT_INACTIVE_SHOW_ITEMS) {
+        break;
+      }
       Notification not = notifications.get(i);
-      if (!chatFocus && System.currentTimeMillis() > not.time + TIME_MSG_NEW) break;
-      font.draw(spriteBatch, not.msg, ZeusGame.PIXELS_PER_TILESIDE * X_SHIFT, ZeusGame.PIXELS_PER_TILESIDE * (i * LINE_HEIGHT + Y_SHIFT));
+      if (!chatFocus && System.currentTimeMillis() > not.time + TIME_MSG_NEW) {
+        break;
+      }
+      font.draw(spriteBatch, not.msg, ZeusGame.PIXELS_PER_TILESIDE * X_SHIFT,
+                ZeusGame.PIXELS_PER_TILESIDE * (i * LINE_HEIGHT + Y_SHIFT));
     }
-    if(chatFocus) {
-      textField.draw(spriteBatch, 1);
+    if (chatFocus) {
+      textField.draw(spriteBatch);
     }
   }
 
   public void addMsg(String msg) {
-    if (msg.length() > MAX_MSG_SIZE) return;
+    if (msg.length() > MAX_MSG_SIZE) {
+      msg = msg.substring(0, MAX_MSG_SIZE);
+    }
     notifications.add(0, new Notification(msg));
     while (notifications.size() > MAX_LIST_SIZE) {
       notifications.remove(notifications.size() - 1);

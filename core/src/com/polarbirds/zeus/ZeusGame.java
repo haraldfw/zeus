@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.polarbirds.zeus.character.Player;
+import com.polarbirds.zeus.hudoverlay.NotificationWindow;
+import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.Keyboard;
 import com.polarbirds.zeus.net.ClientConnection;
-import com.polarbirds.zeus.hudoverlay.NotificationWindow;
 import com.polarbirds.zeus.world.World;
 
 public class ZeusGame extends Game {
@@ -23,7 +23,7 @@ public class ZeusGame extends Game {
   public static final int Y_PIXELS = Y_TILES * PIXELS_PER_TILESIDE;
 
   public static final GameState gameState = GameState.RUNNING;
-
+  public Focus focus = Focus.GAME;
   SpriteBatch sb;
   Texture img;
   World world;
@@ -31,7 +31,10 @@ public class ZeusGame extends Game {
   OrthographicCamera camera;
   NotificationWindow notif;
   Keyboard kb;
-  Stage scene;
+
+  public void setFocus(Focus newFocus) {
+    this.focus = newFocus;
+  }
 
   @Override
   public void create() {
@@ -44,7 +47,7 @@ public class ZeusGame extends Game {
     player = new Player(kb, new Vector2(0, 0), "Harald");
     world.addPlayer(player);
     ClientConnection mp = new ClientConnection("127.0.0.1");
-    notif = new NotificationWindow(kb);
+    notif = new NotificationWindow(kb, this);
   }
 
   @Override
