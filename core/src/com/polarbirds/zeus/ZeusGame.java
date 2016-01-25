@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.polarbirds.zeus.character.Player;
 import com.polarbirds.zeus.input.Keyboard;
 import com.polarbirds.zeus.net.ClientConnection;
-import com.polarbirds.zeus.notification.NotificationWindow;
+import com.polarbirds.zeus.hudoverlay.NotificationWindow;
 import com.polarbirds.zeus.world.World;
 
 public class ZeusGame extends Game {
@@ -45,7 +45,6 @@ public class ZeusGame extends Game {
     world.addPlayer(player);
     ClientConnection mp = new ClientConnection("127.0.0.1");
     notif = new NotificationWindow(kb);
-    scene = new Stage(camera.view.);
   }
 
   @Override

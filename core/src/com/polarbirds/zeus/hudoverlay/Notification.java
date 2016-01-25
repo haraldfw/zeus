@@ -1,4 +1,4 @@
-package com.polarbirds.zeus.notification;
+package com.polarbirds.zeus.hudoverlay;
 
 /**
  * Created by Harald on 23.01.2016.
