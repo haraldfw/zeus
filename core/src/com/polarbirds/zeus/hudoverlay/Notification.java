@@ -4,6 +4,7 @@ package com.polarbirds.zeus.hudoverlay;
  * Created by Harald on 23.01.2016.
  */
 public class Notification {
+
   public final long time;
   public final String msg;
 

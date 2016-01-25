@@ -45,6 +45,7 @@ public class NotificationWindow {
     if (input.chat()) {
       if (game.focus == Focus.CHAT) {
         String text = textField.getText().trim();
+        if (!text.isEmpty()) {
           addMsg("you: " + text);
           textField.clearText();
         }
