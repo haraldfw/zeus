@@ -4,30 +4,32 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
 /**
  * Created by Harald on 14.1.16.
  */
-public class Server implements Runnable {
+public class UDPServer implements Runnable {
 
   public static final int appID = 1947;
-  private static final int PORT = 6767;
-  private DatagramSocket socket;
+  private static final int UDPPORT = 6767;
+  private DatagramSocket udpSocket;
+  private Socket tcpSocket;
   private boolean running = true;
   private ArrayList<InetAddress> connectedIPs;
 
-  public Server(boolean createLocalShell) {
+  public UDPServer(boolean createLocalShell) {
     if (createLocalShell) {
       new Thread(new Shell(this)).start();
     }
     try {
-      socket = new DatagramSocket(PORT);
+      udpSocket = new DatagramSocket(UDPPORT);
     } catch (SocketException e) {
       e.printStackTrace();
     }
-    System.out.println("Server started");
+    System.out.println("UDPServer started");
   }
 
   public void run() {
@@ -35,9 +37,9 @@ public class Server implements Runnable {
       byte[] data = new byte[1024];
       DatagramPacket packet = new DatagramPacket(data, data.length);
       try {
-        socket.receive(packet);
+        udpSocket.receive(packet);
       } catch (IOException e) {
-        if (socket.isClosed()) {
+        if (udpSocket.isClosed()) {
           System.out.println("Socket closed");
           break;
         } else {
@@ -50,18 +52,18 @@ public class Server implements Runnable {
       }
       System.out.println("CLIENT > " + msg);
     }
-    System.out.println("Server stopped");
+    System.out.println("UDPServer stopped");
   }
 
   public void stopServer() {
     running = false;
-    socket.close();
+    udpSocket.close();
   }
 
   public void sendData(byte[] data, InetAddress ipAddress) {
-    DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, PORT);
+    DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, UDPPORT);
     try {
-      socket.send(packet);
+      udpSocket.send(packet);
     } catch (IOException e) {
       e.printStackTrace();
     }

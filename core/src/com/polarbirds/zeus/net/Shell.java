@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
  */
 public class Shell implements Runnable {
 
-  private Server server;
+  private UDPServer server;
 
-  public Shell(Server server) {
+  public Shell(UDPServer server) {
     this.server = server;
   }
 
