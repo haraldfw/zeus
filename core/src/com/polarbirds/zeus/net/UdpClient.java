@@ -10,13 +10,13 @@ import java.net.UnknownHostException;
 /**
  * Created by Harald on 13.01.2016.
  */
-public class UdpClient extends Thread {
+public class UDPClient extends Thread {
 
   private static final int PORT = 6767;
   DatagramSocket socket;
   InetAddress ipAddress;
 
-  public UdpClient(String ipAddress) {
+  public UDPClient(String ipAddress) {
     try {
       socket = new DatagramSocket();
       this.ipAddress = InetAddress.getByName(ipAddress);

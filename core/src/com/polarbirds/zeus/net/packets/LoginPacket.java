@@ -8,9 +8,9 @@ import java.util.BitSet;
 /**
  * Created by Harald on 18.1.16.
  */
-public class Login extends Packet {
+public class LoginPacket extends Packet {
 
-  public Login(BitSet bits) {
+  public LoginPacket(BitSet bits) {
     super(PacketType.LOGIN);
   }
 

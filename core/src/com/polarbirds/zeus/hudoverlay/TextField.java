@@ -1,12 +1,15 @@
 package com.polarbirds.zeus.hudoverlay;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.polarbirds.zeus.ZeusGame;
 import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.Keyboard;
@@ -14,7 +17,7 @@ import com.polarbirds.zeus.input.Keyboard;
 /**
  * Created by Harald on 25.1.16.
  */
-public class TextField implements InputProcessor {
+public class TextField extends InputListener {
 
   GlyphLayout glyphLayout;
   private Keyboard keyboard;
@@ -30,7 +33,9 @@ public class TextField implements InputProcessor {
     this.game = game;
     text = new StringBuilder();
     cursor = 0;
-    Gdx.input.setInputProcessor(this);
+    Stage stage = new Stage();
+    stage.addListener(this);
+    Gdx.input.setInputProcessor(stage);
     cursorSprite.setScale(1, 25);
     glyphLayout = new GlyphLayout();
   }
@@ -57,47 +62,23 @@ public class TextField implements InputProcessor {
   }
 
   @Override
-  public boolean keyTyped(char c) {
+  public boolean keyTyped(InputEvent event, char c) {
     if (game.focus == Focus.CHAT) {
-      System.out.println(c);
-      text.insert(cursor++, c); // put c at cursor and move cursor to right
+      System.out.println(event.getKeyCode() + ", " + c);
+      switch (event.getKeyCode()) {
+        case Input.Keys.BACKSPACE:
+          if(cursor > 0) {
+            text.deleteCharAt(text.length() - 1);
+            cursor--;
+          }
+          break;
+        default:
+          text.insert(cursor++, c); // put c at cursor and move cursor to right
+          break;
+      }
       return true;
     }
     return false;
   }
 
-  @Override
-  public boolean keyDown(int keycode) {
-    return false;
-  }
-
-  @Override
-  public boolean keyUp(int keycode) {
-    return false;
-  }
-
-  @Override
-  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    return false;
-  }
-
-  @Override
-  public boolean mouseMoved(int screenX, int screenY) {
-    return false;
-  }
-
-  @Override
-  public boolean scrolled(int amount) {
-    return false;
-  }
-
-  @Override
-  public boolean touchDragged(int screenX, int screenY, int pointer) {
-    return false;
-  }
-
-  @Override
-  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    return false;
-  }
 }

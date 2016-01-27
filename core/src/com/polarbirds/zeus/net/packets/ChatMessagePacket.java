@@ -8,9 +8,9 @@ import java.util.BitSet;
 /**
  * Created by haraldfw on 1/21/16.
  */
-public class ChatMessage extends Packet {
+public class ChatMessagePacket extends Packet {
 
-  public ChatMessage(BitSet btis) {
+  public ChatMessagePacket(BitSet btis) {
     super(PacketType.CHAT_MESSAGE);
   }
 

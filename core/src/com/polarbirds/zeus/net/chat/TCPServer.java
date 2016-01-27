@@ -1,4 +1,4 @@
-package com.polarbirds.zeus.net;
+package com.polarbirds.zeus.net.chat;
 
 import java.io.IOException;
 import java.net.ServerSocket;

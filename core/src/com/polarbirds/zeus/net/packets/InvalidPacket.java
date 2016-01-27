@@ -14,16 +14,16 @@ import java.util.BitSet;
 /**
  * Created by Harald on 18.1.16.
  */
-public class Invalid extends Packet {
+public class InvalidPacket extends Packet {
 
   String msg;
 
-  public Invalid(BitSet bits) {
+  public InvalidPacket(BitSet bits) {
     super(PacketType.INVALID);
     msg = parseString(bits, 36, -1);
   }
 
-  public Invalid(String msg) {
+  public InvalidPacket(String msg) {
     super(PacketType.INVALID);
     this.msg = msg;
   }

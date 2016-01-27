@@ -11,7 +11,7 @@ import com.polarbirds.zeus.character.Player;
 import com.polarbirds.zeus.hudoverlay.NotificationWindow;
 import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.Keyboard;
-import com.polarbirds.zeus.net.UdpClient;
+import com.polarbirds.zeus.net.UDPClient;
 import com.polarbirds.zeus.world.World;
 
 public class ZeusGame extends Game {
@@ -46,7 +46,7 @@ public class ZeusGame extends Game {
     kb = new Keyboard(camera);
     player = new Player(kb, new Vector2(0, 0), "Harald");
     world.addPlayer(player);
-    UdpClient mp = new UdpClient("127.0.0.1");
+    UDPClient mp = new UDPClient("127.0.0.1");
     notif = new NotificationWindow(kb, this);
   }
 
@@ -55,7 +55,7 @@ public class ZeusGame extends Game {
     float delta = 1f / 60f;
     kb.update();
     world.tick(delta);
-    Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+    Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1);
     Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
     camera.translate(player.pos);
     camera.update();

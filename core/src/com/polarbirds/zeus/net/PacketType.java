@@ -1,8 +1,8 @@
 package com.polarbirds.zeus.net;
 
-import com.polarbirds.zeus.net.packets.Invalid;
-import com.polarbirds.zeus.net.packets.Login;
-import com.polarbirds.zeus.net.packets.PlayerState;
+import com.polarbirds.zeus.net.packets.InvalidPacket;
+import com.polarbirds.zeus.net.packets.LoginPacket;
+import com.polarbirds.zeus.net.packets.PlayerStatePacket;
 
 import java.util.BitSet;
 
@@ -13,27 +13,27 @@ public enum PacketType {
   INVALID(0) {
     @Override
     Packet getPacket(BitSet bits) {
-      return new Invalid(bits);
+      return new InvalidPacket(bits);
     }
   }, LOGIN(1) {
     @Override
     Packet getPacket(BitSet bits) {
-      return new Login(bits);
+      return new LoginPacket(bits);
     }
   }, PLAYER_STATE(2) {
     @Override
     Packet getPacket(BitSet bits) {
       String[] args = new String[0];
       if (args.length != 3) {
-        return new Invalid("Invalid number of arguments for PlayerState-packet");
+        return new InvalidPacket("Invalid number of arguments for PlayerState-packet");
       } else {
         String username = args[0];
         try {
           float newX = Float.parseFloat(args[1]);
           float newY = Float.parseFloat(args[2]);
-          return new PlayerState(username, newX, newY);
+          return new PlayerStatePacket(username, newX, newY);
         } catch (NumberFormatException e) {
-          return new Invalid("Error in types or order of arguments for PlayerState-packet.");
+          return new InvalidPacket("Error in types or order of arguments for PlayerState-packet.");
         }
       }
     }
@@ -60,7 +60,7 @@ public enum PacketType {
         return pid.getPacket(bits);
       }
     }
-    return new Invalid("Invalid packet ID: " + id);
+    return new InvalidPacket("Invalid packet ID: " + id);
   }
 
   public static PacketType getType(int id) {
