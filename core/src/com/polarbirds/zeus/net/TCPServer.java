@@ -9,7 +9,7 @@ import java.net.Socket;
  */
 public class TCPServer implements Runnable {
 
-  private static final int TCPPORT = 6768;
+  public static final int TCPPORT = 6768;
   static boolean running = true;
 
   private  TCPServer(Socket socket) {
