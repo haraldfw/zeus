@@ -1,5 +1,6 @@
 package com.polarbirds.zeus.net.chat;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -8,19 +9,24 @@ import java.net.Socket;
  */
 public class TCPClient implements Runnable {
 
-
-  private boolean running;
+  private boolean running = true;
+  private Socket socket;
 
   @Override
   public void run() {
     try {
+      socket = new Socket("localhost", TCPServer.TCPPORT);
 
-      Socket socket = new Socket("localhost", TCPServer.TCPPORT);
     } catch (IOException e) {
 
     }
-    while(running) {
+    while (running) {
 
     }
+  }
+
+  public synchronized void sendData(String data) throws IOException {
+    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+    out.writeBytes(data);
   }
 }

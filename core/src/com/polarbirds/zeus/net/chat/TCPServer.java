@@ -12,7 +12,7 @@ public class TCPServer implements Runnable {
   public static final int TCPPORT = 6768;
   static boolean running = true;
 
-  private  TCPServer(Socket socket) {
+  private TCPServer(Socket socket) {
   }
 
   @Override
@@ -22,11 +22,15 @@ public class TCPServer implements Runnable {
     }
   }
 
-  public static void start() throws IOException {
-    ServerSocket server = new ServerSocket(TCPPORT);
-    while (running) {
-      Socket s = server.accept();
-      new Thread(new TCPServer(s)).start();
+  public static void start() {
+    try {
+      ServerSocket server = new ServerSocket(TCPPORT);
+      while (running) {
+        Socket s = server.accept();
+        new Thread(new TCPServer(s)).start();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

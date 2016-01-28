@@ -26,7 +26,7 @@ public class Player {
     this.username = username;
   }
 
-  public void tick(float delta) {
+  public void integrate(float delta) {
     acc.mulAdd(force, invmass);
     force.setZero();
     vel.mulAdd(acc, delta);
@@ -38,7 +38,7 @@ public class Player {
     sprite.draw(sb);
   }
 
-  public void push(Vector2 force) {
+  public void applyForce(Vector2 force) {
     this.force.add(force);
   }
 }

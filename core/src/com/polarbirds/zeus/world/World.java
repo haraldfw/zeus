@@ -28,7 +28,7 @@ public class World {
 
   public void tick(float delta) {
     for (Player p : connectedPlayers) {
-      p.tick(delta);
+      p.integrate(delta);
     }
   }
 
