@@ -1,4 +1,4 @@
-package com.polarbirds.zeus.hudoverlay;
+package com.polarbirds.zeus.hudoverlay.chat;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,7 +14,9 @@ import java.util.ArrayList;
 /**
  * Created by Harald on 23.01.2016.
  */
-public class NotificationWindow {
+public class ChatWindow {
+
+  ChatMode chatMode = ChatMode.ALWAYS;
 
   static final int TIME_MSG_NEW = 2500;
   static final int MAX_MSG_SIZE = 500;
@@ -25,20 +27,20 @@ public class NotificationWindow {
   static final float LINE_HEIGHT = 0.5f;
   BitmapFont font;
   AInputProcessor input;
-  ArrayList<Notification> notifications;
+  ArrayList<ChatMsg> chatMsgs;
 
   TextField textField;
 
   ZeusGame game;
 
-  public NotificationWindow(Keyboard input, ZeusGame game) {
+  public ChatWindow(Keyboard input, ZeusGame game) {
     this.input = input;
     this.game = game;
     FreeTypeFontGenerator fg = new FreeTypeFontGenerator(new FileHandle("data/font.ttf"));
     font = fg.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter());
-    notifications = new ArrayList<>();
+    chatMsgs = new ArrayList<>();
     textField = new TextField(font, input, game);
-    addMsg("Notification-window started successfully");
+    addMsg("Chat started successfully");
   }
 
   public void update() {
@@ -58,16 +60,19 @@ public class NotificationWindow {
 
   public void render(SpriteBatch spriteBatch) {
     boolean chatFocus = game.focus == Focus.CHAT;
-    for (int i = 0; i < notifications.size(); i++) {
-      if (!chatFocus && i >= CHAT_INACTIVE_SHOW_ITEMS) {
-        break;
+    if (chatMode != ChatMode.HIDE) {
+      for (int i = 0; i < chatMsgs.size(); i++) {
+        if (!chatFocus && i >= CHAT_INACTIVE_SHOW_ITEMS) {
+          break;
+        }
+        ChatMsg msg = chatMsgs.get(i);
+        if (chatMode != ChatMode.ALWAYS &&
+            !chatFocus && System.currentTimeMillis() > msg.time + TIME_MSG_NEW) {
+          break;
+        }
+        font.draw(spriteBatch, msg.toString(), ZeusGame.PIXELS_PER_TILESIDE * X_SHIFT,
+            ZeusGame.PIXELS_PER_TILESIDE * (i * LINE_HEIGHT + Y_SHIFT));
       }
-      Notification not = notifications.get(i);
-      if (!chatFocus && System.currentTimeMillis() > not.time + TIME_MSG_NEW) {
-        break;
-      }
-      font.draw(spriteBatch, not.msg, ZeusGame.PIXELS_PER_TILESIDE * X_SHIFT,
-                ZeusGame.PIXELS_PER_TILESIDE * (i * LINE_HEIGHT + Y_SHIFT));
     }
     if (chatFocus) {
       textField.draw(spriteBatch);
@@ -78,9 +83,9 @@ public class NotificationWindow {
     if (msg.length() > MAX_MSG_SIZE) {
       msg = msg.substring(0, MAX_MSG_SIZE);
     }
-    notifications.add(0, new Notification(msg));
-    while (notifications.size() > MAX_LIST_SIZE) {
-      notifications.remove(notifications.size() - 1);
+    chatMsgs.add(0, new ChatMsg(msg));
+    while (chatMsgs.size() > MAX_LIST_SIZE) {
+      chatMsgs.remove(chatMsgs.size() - 1);
     }
   }
 }

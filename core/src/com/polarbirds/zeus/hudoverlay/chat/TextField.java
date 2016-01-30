@@ -1,4 +1,4 @@
-package com.polarbirds.zeus.hudoverlay;
+package com.polarbirds.zeus.hudoverlay.chat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

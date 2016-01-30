@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.polarbirds.zeus.character.Player;
-import com.polarbirds.zeus.hudoverlay.NotificationWindow;
+import com.polarbirds.zeus.hudoverlay.chat.ChatWindow;
 import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.Keyboard;
 import com.polarbirds.zeus.net.UDPClient;
@@ -29,7 +29,7 @@ public class ZeusGame extends Game {
   World world;
   Player player;
   OrthographicCamera camera;
-  NotificationWindow notif;
+  ChatWindow notif;
   Keyboard kb;
 
   public void setFocus(Focus newFocus) {
@@ -38,6 +38,7 @@ public class ZeusGame extends Game {
 
   @Override
   public void create() {
+    Config.getInstance().initPrefs();
     sb = new SpriteBatch();
     camera = new OrthographicCamera();
     camera.setToOrtho(false, X_TILES, Y_TILES);
@@ -47,7 +48,7 @@ public class ZeusGame extends Game {
     player = new Player(kb, new Vector2(0, 0), "Harald");
     world.addPlayer(player);
     UDPClient mp = new UDPClient("127.0.0.1");
-    notif = new NotificationWindow(kb, this);
+    notif = new ChatWindow(kb, this);
   }
 
   @Override
