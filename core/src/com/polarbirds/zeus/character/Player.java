@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.polarbirds.zeus.input.AInputProcessor;
+import com.polarbirds.zeus.world.Tile;
 
 /**
  * Created by Harald on 13.01.2016.
@@ -26,11 +27,14 @@ public class Player {
     this.username = username;
   }
 
-  public void integrate(float delta) {
+  public void integrate(float delta, Tile[][] tiles) {
     acc.mulAdd(force, invmass);
     force.setZero();
     vel.mulAdd(acc, delta);
-    pos.mulAdd(vel, delta);
+    Vector2 newPos = new Vector2(pos).mulAdd(vel, delta);
+    if (tiles[(int) newPos.x][(int) newPos.y].collision != Tile.TileCollision.WALL) {
+      pos = newPos;
+    }
   }
 
   public void draw(SpriteBatch sb) {

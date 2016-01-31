@@ -12,7 +12,8 @@ import com.polarbirds.zeus.hudoverlay.chat.ChatWindow;
 import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.Keyboard;
 import com.polarbirds.zeus.net.UDPClient;
-import com.polarbirds.zeus.world.World;
+import com.polarbirds.zeus.world.WorldHandler;
+import com.polarbirds.zeus.world.generator.World;
 
 public class ZeusGame extends Game {
 
@@ -24,10 +25,11 @@ public class ZeusGame extends Game {
 
   public static final GameState gameState = GameState.RUNNING;
   public Focus focus = Focus.GAME;
-  SpriteBatch sb;
+  SpriteBatch worldSB;
+  SpriteBatch hudSB;
   Texture img;
-  World world;
-  Player player;
+  WorldHandler worldHandler;
+  Player localPlayer;
   OrthographicCamera camera;
   ChatWindow notif;
   Keyboard kb;
@@ -39,31 +41,40 @@ public class ZeusGame extends Game {
   @Override
   public void create() {
     Config.getInstance().initPrefs();
-    sb = new SpriteBatch();
+    hudSB = new SpriteBatch();
+    worldSB = new SpriteBatch();
     camera = new OrthographicCamera();
     camera.setToOrtho(false, X_TILES, Y_TILES);
     camera.position.set(X_TILES / 2, Y_TILES / 2, 0);
-    world = new World();
+    worldSB.setProjectionMatrix(camera.combined);
     kb = new Keyboard(camera);
-    player = new Player(kb, new Vector2(0, 0), "Harald");
-    world.addPlayer(player);
-    UDPClient mp = new UDPClient("127.0.0.1");
+    localPlayer = new Player(kb, new Vector2(0, 0), "Harald");
+    worldHandler = new WorldHandler(localPlayer);
+    worldHandler.start(World.WorldType.HUB);
+    UDPClient udpClient = new UDPClient("127.0.0.1");
     notif = new ChatWindow(kb, this);
   }
 
   @Override
   public void render() {
     float delta = 1f / 60f;
+
     kb.update();
-    world.tick(delta);
+    worldHandler.tick(delta);
+
     Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1);
     Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-    camera.translate(player.pos);
+    //camera.translate(localPlayer.pos);
     camera.update();
-    sb.begin();
-    world.draw(sb);
+
+    worldSB.setProjectionMatrix(camera.combined);
+    worldSB.begin();
+    worldHandler.draw(worldSB);
+    worldSB.end();
+
     notif.update();
-    notif.render(sb);
-    sb.end();
+    hudSB.begin();
+    notif.render(hudSB);
+    hudSB.end();
   }
 }
