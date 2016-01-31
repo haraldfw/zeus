@@ -27,7 +27,7 @@ public class World {
       for (int y = 0; y < tiles[0].length; y++) {
         Tile tile = tiles[x][y];
         if (tile.graphic == Tile.TileGraphic.FLOOR_BASIC) {
-          batch.draw(textures.get(tile.graphic), x, y);
+          batch.draw(textures.get(tile.graphic), x, y, 1, 1);
         }
       }
     }
@@ -39,6 +39,7 @@ public class World {
         Tile tile = tiles[x][y];
         if(tile.graphic == Tile.TileGraphic.WALL_BASIC) {
 
+          batch.draw(textures.get(Tile.TileGraphic.WALL_BASIC), x, y + 1, 1, 1);
         }
       }
     }

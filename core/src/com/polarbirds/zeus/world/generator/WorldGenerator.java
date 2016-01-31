@@ -19,7 +19,7 @@ public class WorldGenerator {
   }
 
   private static World getHub() {
-    Tile[][] tiles = new Tile[20][40];
+    Tile[][] tiles = new Tile[40][20];
     Vector2 spawn = new Vector2(5, 10);
     for (int x = 0; x < tiles.length; x++) {
       for (int y = 0; y < tiles[0].length; y++) {

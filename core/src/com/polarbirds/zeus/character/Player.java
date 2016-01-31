@@ -35,9 +35,12 @@ public class Player {
     if (tiles[(int) newPos.x][(int) newPos.y].collision != Tile.TileCollision.WALL) {
       pos = newPos;
     }
+    System.out.println(pos.toString());
   }
 
   public void draw(SpriteBatch sb) {
+    sprite.setRegionWidth(1);
+    sprite.setRegionHeight(1);
     sprite.setPosition(pos.x, pos.y);
     sprite.draw(sb);
   }

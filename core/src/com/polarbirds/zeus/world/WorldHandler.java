@@ -43,6 +43,7 @@ public class WorldHandler {
     for (Player p : connectedPlayers) {
       p.draw(sb);
     }
+    localPlayer.draw(sb);
     world.drawWalls(sb);
   }
 
