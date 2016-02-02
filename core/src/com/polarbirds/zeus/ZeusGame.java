@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.polarbirds.zeus.character.Player;
 import com.polarbirds.zeus.hudoverlay.chat.ChatWindow;
 import com.polarbirds.zeus.input.Focus;
@@ -17,11 +19,12 @@ import com.polarbirds.zeus.world.generator.World;
 
 public class ZeusGame extends Game {
 
+  public static final int ART_PIXELS_PER_TILESIDE = 16;
   public static final int X_TILES = 32;
   public static final int Y_TILES = 18;
-  public static final int PIXELS_PER_TILESIDE = 50;
-  public static final int X_PIXELS = X_TILES * PIXELS_PER_TILESIDE;
-  public static final int Y_PIXELS = Y_TILES * PIXELS_PER_TILESIDE;
+  public static final int SCREEN_PIXELS_PER_TILESIDE = 50;
+  public static final int X_PIXELS = X_TILES * SCREEN_PIXELS_PER_TILESIDE;
+  public static final int Y_PIXELS = Y_TILES * SCREEN_PIXELS_PER_TILESIDE;
 
   public static final GameState gameState = GameState.RUNNING;
   public Focus focus = Focus.GAME;
@@ -33,6 +36,7 @@ public class ZeusGame extends Game {
   OrthographicCamera camera;
   ChatWindow notif;
   Keyboard kb;
+  private float timestep = 1f/60f;
 
   public void setFocus(Focus newFocus) {
     this.focus = newFocus;
@@ -45,7 +49,6 @@ public class ZeusGame extends Game {
     worldSB = new SpriteBatch();
     camera = new OrthographicCamera();
     camera.setToOrtho(false, X_TILES, Y_TILES);
-    camera.position.set(X_TILES / 2, Y_TILES / 2, 0);
     worldSB.setProjectionMatrix(camera.combined);
     kb = new Keyboard(camera);
     localPlayer = new Player(kb, new Vector2(0, 0), "Harald");
@@ -57,17 +60,17 @@ public class ZeusGame extends Game {
 
   @Override
   public void render() {
-    float delta = 1f / 60f;
-
     kb.update();
-    worldHandler.tick(delta);
+    worldHandler.tick(timestep);
 
     Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1);
     Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-    camera.position.set(localPlayer.pos, 0);
-    camera.update();
 
+    camera.setToOrtho(false, X_TILES, Y_TILES);
+    camera.position.set(localPlayer.pos.x,localPlayer.pos.y, 0);
+    camera.update();
     worldSB.setProjectionMatrix(camera.combined);
+
     worldSB.begin();
     worldHandler.draw(worldSB);
     worldSB.end();
@@ -76,5 +79,13 @@ public class ZeusGame extends Game {
     hudSB.begin();
     notif.render(hudSB);
     hudSB.end();
+
+
+    ShapeRenderer sr = new ShapeRenderer();
+    sr.setProjectionMatrix(camera.combined);
+    sr.begin(ShapeRenderer.ShapeType.Line);
+    sr.line(localPlayer.pos.x, localPlayer.pos.y, camera.position.x, camera.position.y);
+    sr.end();
+
   }
 }

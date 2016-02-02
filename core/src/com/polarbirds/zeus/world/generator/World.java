@@ -38,8 +38,10 @@ public class World {
       for (int y = 0; y < tiles[0].length; y++) {
         Tile tile = tiles[x][y];
         if(tile.graphic == Tile.TileGraphic.WALL_BASIC) {
-
           batch.draw(textures.get(Tile.TileGraphic.WALL_BASIC), x, y + 1, 1, 1);
+          if(y - 1 < 0 || tiles[x][y - 1].collision == Tile.TileCollision.FLOOR) {
+            batch.draw(textures.get(Tile.TileGraphic.WALL_SIDE), x, y, 1, 1);
+          }
         }
       }
     }

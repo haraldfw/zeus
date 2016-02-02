@@ -8,10 +8,10 @@ import com.polarbirds.zeus.net.UDPServer;
 public class DesktopLauncher {
 
   public static void main(String[] args) {
-    new Thread(new UDPServer(true)).start();
+    //new Thread(new UDPServer(true)).start();
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-    config.width = ZeusGame.PIXELS_PER_TILESIDE * ZeusGame.X_TILES;
-    config.height = ZeusGame.PIXELS_PER_TILESIDE * ZeusGame.Y_TILES;
+    config.width = ZeusGame.SCREEN_PIXELS_PER_TILESIDE * ZeusGame.X_TILES;
+    config.height = ZeusGame.SCREEN_PIXELS_PER_TILESIDE * ZeusGame.Y_TILES;
     config.foregroundFPS = 60;
     config.backgroundFPS = 60;
     config.useGL30 = true;

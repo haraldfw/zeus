@@ -50,9 +50,9 @@ public class TextField extends InputListener {
 
   public void draw(SpriteBatch sb) {
     String text = getText();
-    font.draw(sb, text, ZeusGame.PIXELS_PER_TILESIDE, 25);
+    font.draw(sb, text, ZeusGame.SCREEN_PIXELS_PER_TILESIDE, 25);
     glyphLayout.setText(font, text);
-    cursorSprite.setPosition(ZeusGame.PIXELS_PER_TILESIDE + glyphLayout.width, 25);
+    cursorSprite.setPosition(ZeusGame.SCREEN_PIXELS_PER_TILESIDE + glyphLayout.width, 25);
     cursorSprite.draw(sb);
   }
 

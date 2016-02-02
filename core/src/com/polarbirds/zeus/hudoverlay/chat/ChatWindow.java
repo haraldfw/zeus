@@ -70,8 +70,8 @@ public class ChatWindow {
             !chatFocus && System.currentTimeMillis() > msg.time + TIME_MSG_NEW) {
           break;
         }
-        font.draw(spriteBatch, msg.toString(), ZeusGame.PIXELS_PER_TILESIDE * X_SHIFT,
-            ZeusGame.PIXELS_PER_TILESIDE * (i * LINE_HEIGHT + Y_SHIFT));
+        font.draw(spriteBatch, msg.toString(), ZeusGame.SCREEN_PIXELS_PER_TILESIDE * X_SHIFT,
+            ZeusGame.SCREEN_PIXELS_PER_TILESIDE * (i * LINE_HEIGHT + Y_SHIFT));
       }
     }
     if (chatFocus) {
