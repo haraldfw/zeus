@@ -48,7 +48,7 @@ public class WorldHandler {
   }
 
   public void start(World.WorldType type) {
-    world = WorldGenerator.generateWorld(World.WorldType.HUB);
+    world = WorldGenerator.generateWorld(type);
     localPlayer.pos.set(world.spawn);
     for(Player p : connectedPlayers) {
       p.pos.set(world.spawn);

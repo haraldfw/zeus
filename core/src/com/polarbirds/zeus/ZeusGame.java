@@ -8,14 +8,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.polarbirds.zeus.character.Player;
 import com.polarbirds.zeus.hudoverlay.chat.ChatWindow;
 import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.Keyboard;
-import com.polarbirds.zeus.net.UDPClient;
+import com.polarbirds.zeus.net.udp.UDPClient;
 import com.polarbirds.zeus.world.WorldHandler;
 import com.polarbirds.zeus.world.generator.World;
+import com.smokebox.lib.pcg.dungeon.RoomSpreadDungeon;
 
 public class ZeusGame extends Game {
 
@@ -53,7 +54,7 @@ public class ZeusGame extends Game {
     kb = new Keyboard(camera);
     localPlayer = new Player(kb, new Vector2(0, 0), "Harald");
     worldHandler = new WorldHandler(localPlayer);
-    worldHandler.start(World.WorldType.HUB);
+    worldHandler.start(World.WorldType.DUNGEON);
     UDPClient udpClient = new UDPClient("127.0.0.1");
     notif = new ChatWindow(kb, this);
   }

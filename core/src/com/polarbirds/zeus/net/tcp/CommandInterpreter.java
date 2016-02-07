@@ -2,8 +2,8 @@ package com.polarbirds.zeus.net.tcp;
 
 import com.polarbirds.zeus.ZeusGame;
 import com.polarbirds.zeus.net.Shell;
-import com.polarbirds.zeus.net.UDPClient;
-import com.polarbirds.zeus.net.UDPServer;
+import com.polarbirds.zeus.net.udp.UDPClient;
+import com.polarbirds.zeus.net.udp.UDPServer;
 
 /**
  * Created by Harald on 27.1.16.

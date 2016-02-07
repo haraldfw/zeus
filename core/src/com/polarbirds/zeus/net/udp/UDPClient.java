@@ -1,4 +1,4 @@
-package com.polarbirds.zeus.net;
+package com.polarbirds.zeus.net.udp;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

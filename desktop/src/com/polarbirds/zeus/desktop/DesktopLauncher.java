@@ -3,7 +3,6 @@ package com.polarbirds.zeus.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.polarbirds.zeus.ZeusGame;
-import com.polarbirds.zeus.net.UDPServer;
 
 public class DesktopLauncher {
 

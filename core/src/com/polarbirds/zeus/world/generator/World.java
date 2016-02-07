@@ -48,6 +48,7 @@ public class World {
   }
 
   public enum WorldType {
-    HUB;
+    HUB,
+    DUNGEON;
   }
 }
