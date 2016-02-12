@@ -27,19 +27,8 @@ public class InputHandler extends InputListener {
       case CHAT:
         chatWindow.handleInputEvent(event);
         return true;
-    }
-    return false;
-  }
-
-  @Override
-  public boolean keyDown(InputEvent event, int keycode) {
-    switch (game.focus) {
       case GAME:
-        Key k = Key.get(event.getKeyCode());
-        if (k != null) {
-          player.handleKeyDown(Key.get(event.getKeyCode()));
-        }
-        return true;
+        game.handleInputEvent(Key.get(event.getKeyCode()));
     }
     return false;
   }

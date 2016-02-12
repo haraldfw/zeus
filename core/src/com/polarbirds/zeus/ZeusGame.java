@@ -13,6 +13,7 @@ import com.polarbirds.zeus.character.Player;
 import com.polarbirds.zeus.hudoverlay.chat.ChatWindow;
 import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.InputHandler;
+import com.polarbirds.zeus.input.Key;
 import com.polarbirds.zeus.input.PlayerInputHandler;
 import com.polarbirds.zeus.net.udp.UDPClient;
 import com.polarbirds.zeus.world.WorldHandler;
@@ -33,6 +34,7 @@ public class ZeusGame extends Game {
   SpriteBatch hudSB;
   Texture img;
   WorldHandler worldHandler;
+  PlayerInputHandler playerInput;
   Player localPlayer;
   OrthographicCamera camera;
   private ChatWindow chatWindow;
@@ -53,7 +55,7 @@ public class ZeusGame extends Game {
     worldSB.setProjectionMatrix(camera.combined);
     localPlayer = new Player(new Vector2(0, 0), "Harald");
     worldHandler = new WorldHandler(localPlayer);
-    PlayerInputHandler playerInput = new PlayerInputHandler(localPlayer);
+    playerInput = new PlayerInputHandler(localPlayer);
     worldHandler.start(World.WorldType.DUNGEON);
     UDPClient udpClient = new UDPClient("127.0.0.1");
     chatWindow = new ChatWindow(this);
@@ -66,6 +68,7 @@ public class ZeusGame extends Game {
 
   @Override
   public void render() {
+    playerInput.update();
     worldHandler.tick(timestep);
 
     Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1);
@@ -84,12 +87,22 @@ public class ZeusGame extends Game {
     chatWindow.render(hudSB);
     hudSB.end();
 
-
     ShapeRenderer sr = new ShapeRenderer();
     sr.setProjectionMatrix(camera.combined);
     sr.begin(ShapeRenderer.ShapeType.Line);
     sr.line(localPlayer.pos.x, localPlayer.pos.y, camera.position.x, camera.position.y);
     sr.end();
+  }
+
+  public void handleInputEvent(Key key) {
+    if (key == null) {
+      return;
+    }
+    switch (key) {
+      case FOCUS_CHAT:
+        focus = Focus.CHAT;
+      default:
+    }
   }
 
 
