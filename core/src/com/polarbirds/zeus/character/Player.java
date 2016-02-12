@@ -1,11 +1,8 @@
 package com.polarbirds.zeus.character;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.polarbirds.zeus.ZeusGame;
-import com.polarbirds.zeus.input.AInputProcessor;
 import com.polarbirds.zeus.world.Tile;
 
 /**
@@ -15,7 +12,6 @@ public class Player {
 
   private static Texture texture = new Texture("data/player.png");
 
-  public final AInputProcessor input;
   public Vector2 pos;
   public Vector2 vel = new Vector2();
   public Vector2 force = new Vector2();
@@ -27,20 +23,18 @@ public class Player {
   public static final float LINEAR_DAMPENING = 0.9f;
   public float walkForce = 50f;
 
-  public Player(AInputProcessor input, Vector2 pos, String username) {
-    this.input = input;
+  public Player(Vector2 pos, String username) {
     this.pos = new Vector2(pos);
     this.username = username;
   }
 
   public void integrate(float delta, Tile[][] tiles) {
     pos.mulAdd(vel, delta);
-    force.add(input.moveX() * walkForce, input.moveY() * walkForce);
     force.scl(invmass);
     vel.mulAdd(force, delta);
     vel.scl(LINEAR_DAMPENING);
     force.setZero();
-    System.out.println(pos.toString() + ", " + vel.toString());
+    //System.out.println(pos.toString() + ", " + vel.toString());
   }
 
   public void draw(SpriteBatch sb) {
@@ -48,6 +42,14 @@ public class Player {
   }
 
   public void applyForce(Vector2 force) {
-    this.force.add(force);
+    applyForce(force.x, force.y);
+  }
+
+  public void applyForce(float x, float y) {
+    this.force.add(x, y);
+  }
+
+  public void applyWalkForce(float x, float y) {
+    applyForce(x * walkForce, y * walkForce);
   }
 }

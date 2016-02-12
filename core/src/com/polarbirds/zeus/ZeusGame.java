@@ -8,15 +8,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.StringBuilder;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.polarbirds.zeus.character.Player;
 import com.polarbirds.zeus.hudoverlay.chat.ChatWindow;
 import com.polarbirds.zeus.input.Focus;
-import com.polarbirds.zeus.input.Keyboard;
+import com.polarbirds.zeus.input.InputHandler;
+import com.polarbirds.zeus.input.PlayerInputHandler;
 import com.polarbirds.zeus.net.udp.UDPClient;
 import com.polarbirds.zeus.world.WorldHandler;
 import com.polarbirds.zeus.world.generator.World;
-import com.smokebox.lib.pcg.dungeon.RoomSpreadDungeon;
 
 public class ZeusGame extends Game {
 
@@ -35,9 +35,9 @@ public class ZeusGame extends Game {
   WorldHandler worldHandler;
   Player localPlayer;
   OrthographicCamera camera;
-  ChatWindow notif;
-  Keyboard kb;
-  private float timestep = 1f/60f;
+  private ChatWindow chatWindow;
+  private InputHandler inputHandler;
+  private float timestep = 1f / 60f;
 
   public void setFocus(Focus newFocus) {
     this.focus = newFocus;
@@ -51,24 +51,28 @@ public class ZeusGame extends Game {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, X_TILES, Y_TILES);
     worldSB.setProjectionMatrix(camera.combined);
-    kb = new Keyboard(camera);
-    localPlayer = new Player(kb, new Vector2(0, 0), "Harald");
+    localPlayer = new Player(new Vector2(0, 0), "Harald");
     worldHandler = new WorldHandler(localPlayer);
+    PlayerInputHandler playerInput = new PlayerInputHandler(localPlayer);
     worldHandler.start(World.WorldType.DUNGEON);
     UDPClient udpClient = new UDPClient("127.0.0.1");
-    notif = new ChatWindow(kb, this);
+    chatWindow = new ChatWindow(this);
+
+    inputHandler = new InputHandler(this, playerInput, chatWindow);
+    Stage stage = new Stage();
+    stage.addListener(inputHandler);
+    Gdx.input.setInputProcessor(stage);
   }
 
   @Override
   public void render() {
-    kb.update();
     worldHandler.tick(timestep);
 
     Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1);
     Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
     camera.setToOrtho(false, X_TILES, Y_TILES);
-    camera.position.set(localPlayer.pos.x,localPlayer.pos.y, 0);
+    camera.position.set(localPlayer.pos.x, localPlayer.pos.y, 0);
     camera.update();
     worldSB.setProjectionMatrix(camera.combined);
 
@@ -76,9 +80,8 @@ public class ZeusGame extends Game {
     worldHandler.draw(worldSB);
     worldSB.end();
 
-    notif.update();
     hudSB.begin();
-    notif.render(hudSB);
+    chatWindow.render(hudSB);
     hudSB.end();
 
 
@@ -87,6 +90,7 @@ public class ZeusGame extends Game {
     sr.begin(ShapeRenderer.ShapeType.Line);
     sr.line(localPlayer.pos.x, localPlayer.pos.y, camera.position.x, camera.position.y);
     sr.end();
-
   }
+
+
 }

@@ -1,6 +1,7 @@
 package com.polarbirds.zeus;
 
 import com.polarbirds.zeus.hudoverlay.chat.ChatMode;
+import com.polarbirds.zeus.input.Key;
 
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -29,6 +30,15 @@ public class Config {
       }
       Preferences chat = prefs.node("chat");
       chat.putInt("mode", ChatMode.WHEN_ACTIVE.ordinal());
+      // keys
+      Preferences.userRoot().node("keys").removeNode();
+      if (prefs.nodeExists("keys")) {
+        prefs.node("chat").removeNode();
+      }
+      Preferences keys = prefs.node("chat");
+      for (Key key : Key.values()) {
+        keys.putInt(key.toString(), key.integer);
+      }
     } catch (BackingStoreException e) {
       e.printStackTrace();
     }

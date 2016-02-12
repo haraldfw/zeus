@@ -4,17 +4,17 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.polarbirds.zeus.ZeusGame;
-import com.polarbirds.zeus.input.AInputProcessor;
 import com.polarbirds.zeus.input.Focus;
-import com.polarbirds.zeus.input.Keyboard;
+import com.polarbirds.zeus.input.Key;
 
 import java.util.ArrayList;
 
 /**
  * Created by Harald on 23.01.2016.
  */
-public class ChatWindow {
+public class ChatWindow  {
 
   ChatMode chatMode = ChatMode.ALWAYS;
 
@@ -26,35 +26,38 @@ public class ChatWindow {
   static final float Y_SHIFT = 1;
   static final float LINE_HEIGHT = 0.5f;
   BitmapFont font;
-  AInputProcessor input;
   ArrayList<ChatMsg> chatMsgs;
 
   TextField textField;
 
   ZeusGame game;
 
-  public ChatWindow(Keyboard input, ZeusGame game) {
-    this.input = input;
+  public ChatWindow(ZeusGame game) {
     this.game = game;
     FreeTypeFontGenerator fg = new FreeTypeFontGenerator(new FileHandle("data/font.ttf"));
     font = fg.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter());
     chatMsgs = new ArrayList<>();
-    textField = new TextField(font, input, game);
+    textField = new TextField(font, game);
     addMsg("Chat started successfully");
   }
 
-  public void update() {
-    if (input.chat()) {
-      if (game.focus == Focus.CHAT) {
-        String text = textField.getText().trim();
-        if (!text.isEmpty()) {
-          addMsg("you: " + text);
-          textField.clearText();
+  public void handleInputEvent(InputEvent event) {
+    textField.handleInputEvent(event);
+  }
+
+  public void handleInput(Key key) {
+    switch (key) {
+      case FOCUS_CHAT:
+        if (game.focus == Focus.CHAT) {
+          String text = textField.getText().trim();
+          if (!text.isEmpty()) {
+            addMsg("you: " + text);
+            textField.clearText();
+          }
+          game.setFocus(Focus.GAME);
+        } else {
+          game.setFocus(Focus.CHAT);
         }
-        game.setFocus(Focus.GAME);
-      } else {
-        game.setFocus(Focus.CHAT);
-      }
     }
   }
 
