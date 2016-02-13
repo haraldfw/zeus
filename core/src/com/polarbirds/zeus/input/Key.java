@@ -17,19 +17,19 @@ public enum Key {
   MENU_RIGHT(Input.Keys.RIGHT),
   FOCUS_CHAT(Input.Keys.ENTER);
 
-  public int integer;
+  public int value;
 
-  Key(int integer) {
-    this.integer = integer;
+  Key(int value) {
+    this.value = value;
   }
 
-  public void setInteger(int integer) {
-    this.integer = integer;
+  public void setValue(int value) {
+    this.value = value;
   }
 
   public static Key get(int keyCode) {
     for (Key key : Key.values()) {
-      if( key.integer == keyCode) {
+      if( key.value == keyCode) {
         return key;
       }
     }

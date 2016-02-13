@@ -57,7 +57,7 @@ public class TextField {
   }
 
   public void handleInput(Key key) {
-    switch (key.integer) {
+    switch (key.value) {
       case Input.Keys.BACKSPACE :
         if (cursor > 0) {
           text.deleteCharAt(text.length() - 1);

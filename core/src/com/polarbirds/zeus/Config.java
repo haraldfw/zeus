@@ -37,7 +37,7 @@ public class Config {
       }
       Preferences keys = prefs.node("chat");
       for (Key key : Key.values()) {
-        keys.putInt(key.toString(), key.integer);
+        keys.putInt(key.toString(), key.value);
       }
     } catch (BackingStoreException e) {
       e.printStackTrace();
