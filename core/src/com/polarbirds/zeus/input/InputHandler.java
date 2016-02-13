@@ -28,7 +28,8 @@ public class InputHandler extends InputListener {
         chatWindow.handleInputEvent(event);
         return true;
       case GAME:
-        game.handleInputEvent(Key.get(event.getKeyCode()));
+        game.handleKey(event.getKeyCode());
+        return true;
     }
     return false;
   }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by Harald on 23.01.2016.
  */
-public class ChatWindow  {
+public class ChatWindow {
 
   ChatMode chatMode = ChatMode.ALWAYS;
 
@@ -42,22 +42,17 @@ public class ChatWindow  {
   }
 
   public void handleInputEvent(InputEvent event) {
-    textField.handleInputEvent(event);
-  }
-
-  public void handleInput(Key key) {
-    switch (key) {
-      case FOCUS_CHAT:
-        if (game.focus == Focus.CHAT) {
-          String text = textField.getText().trim();
-          if (!text.isEmpty()) {
-            addMsg("you: " + text);
-            textField.clearText();
-          }
-          game.setFocus(Focus.GAME);
-        } else {
-          game.setFocus(Focus.CHAT);
+    if (event.getKeyCode() == Key.TOGGLE_CHAT.value) {
+      if (game.focus == Focus.CHAT) {
+        String text = textField.getText().trim();
+        if (!text.isEmpty()) {
+          addMsg("you: " + text);
+          textField.clearText();
         }
+        game.setFocus(Focus.GAME);
+      }
+    } else {
+      textField.handleInputEvent(event);
     }
   }
 

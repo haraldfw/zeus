@@ -15,18 +15,24 @@ public class PlayerInputHandler {
     this.player = player;
   }
 
-  public void update() {
-    if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+  public void takeMovement() {
+    if(Gdx.input.isKeyPressed(Key.PLAYER_MOVE_UP.value)) {
       player.applyWalkForce(0, 1);
     }
-    if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+    if(Gdx.input.isKeyPressed(Key.PLAYER_MOVE_LEFT.value)) {
       player.applyWalkForce(-1, 0);
     }
-    if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+    if(Gdx.input.isKeyPressed(Key.PLAYER_MOVE_DOWN.value)) {
       player.applyWalkForce(0, -1);
     }
-    if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+    if(Gdx.input.isKeyPressed(Key.PLAYER_MOVE_RIGHT.value)) {
       player.applyWalkForce(1, 0);
+    }
+  }
+
+  public void takeKey(Key key) {
+    switch (key) {
+
     }
   }
 }

@@ -68,7 +68,9 @@ public class ZeusGame extends Game {
 
   @Override
   public void render() {
-    playerInput.update();
+    if(focus == Focus.GAME) {
+      playerInput.takeMovement();
+    }
     worldHandler.tick(timestep);
 
     Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1);
@@ -94,16 +96,10 @@ public class ZeusGame extends Game {
     sr.end();
   }
 
-  public void handleInputEvent(Key key) {
-    if (key == null) {
-      return;
-    }
-    switch (key) {
-      case FOCUS_CHAT:
-        focus = Focus.CHAT;
-      default:
+  public void handleKey(int value) {
+    if(value == Key.TOGGLE_CHAT.value){
+      focus = Focus.CHAT;
+      System.out.println("Focus changed to CHAT");
     }
   }
-
-
 }
