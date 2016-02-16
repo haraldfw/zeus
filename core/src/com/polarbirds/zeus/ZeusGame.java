@@ -32,7 +32,6 @@ public class ZeusGame extends Game {
   public Focus focus = Focus.GAME;
   SpriteBatch worldSB;
   SpriteBatch hudSB;
-  Texture img;
   WorldHandler worldHandler;
   PlayerInputHandler playerInput;
   Player localPlayer;
