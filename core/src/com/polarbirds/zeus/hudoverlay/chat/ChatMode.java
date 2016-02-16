@@ -6,5 +6,5 @@ package com.polarbirds.zeus.hudoverlay.chat;
 public enum ChatMode {
   HIDE,
   WHEN_ACTIVE,
-  ALWAYS;
+  ALWAYS
 }
