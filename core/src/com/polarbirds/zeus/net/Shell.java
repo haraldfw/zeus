@@ -1,6 +1,6 @@
 package com.polarbirds.zeus.net;
 
-import com.polarbirds.zeus.net.udp.UDPServer;
+import com.polarbirds.zeus.net.server.UDPServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

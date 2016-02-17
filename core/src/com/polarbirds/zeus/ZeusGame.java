@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -15,7 +14,7 @@ import com.polarbirds.zeus.input.Focus;
 import com.polarbirds.zeus.input.InputHandler;
 import com.polarbirds.zeus.input.Key;
 import com.polarbirds.zeus.input.PlayerInputHandler;
-import com.polarbirds.zeus.net.udp.UDPClient;
+import com.polarbirds.zeus.net.udp.UDPConnection;
 import com.polarbirds.zeus.world.WorldHandler;
 import com.polarbirds.zeus.world.generator.World;
 
@@ -56,7 +55,7 @@ public class ZeusGame extends Game {
     worldHandler = new WorldHandler(localPlayer);
     playerInput = new PlayerInputHandler(localPlayer);
     worldHandler.start(World.WorldType.DUNGEON);
-    UDPClient udpClient = new UDPClient("127.0.0.1");
+    UDPConnection udpConnection = new UDPConnection("127.0.0.1");
     chatWindow = new ChatWindow(this);
 
     inputHandler = new InputHandler(this, playerInput, chatWindow);

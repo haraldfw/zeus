@@ -35,7 +35,8 @@ public class WorldHandler {
   }
 
   public void tick(float delta) {
-    localPlayer.integrate(delta, world.tiles);
+    localPlayer.integrate(delta);
+    
   }
 
   public void draw(SpriteBatch sb) {

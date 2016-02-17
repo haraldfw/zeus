@@ -1,5 +1,7 @@
 package com.polarbirds.zeus.net.tcp;
 
+import com.polarbirds.zeus.net.server.TCPServer;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -7,7 +9,7 @@ import java.net.Socket;
 /**
  * Created by Harald on 27.1.16.
  */
-public class TCPClient implements Runnable {
+public class TCPConnection implements Runnable {
 
   private boolean running = true;
   private Socket socket;

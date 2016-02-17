@@ -2,8 +2,9 @@ package com.polarbirds.zeus.net.tcp;
 
 import com.polarbirds.zeus.ZeusGame;
 import com.polarbirds.zeus.net.Shell;
-import com.polarbirds.zeus.net.udp.UDPClient;
-import com.polarbirds.zeus.net.udp.UDPServer;
+import com.polarbirds.zeus.net.server.TCPServer;
+import com.polarbirds.zeus.net.udp.UDPConnection;
+import com.polarbirds.zeus.net.server.UDPServer;
 
 /**
  * Created by Harald on 27.1.16.
@@ -11,19 +12,19 @@ import com.polarbirds.zeus.net.udp.UDPServer;
 public class CommandInterpreter {
 
   private UDPServer udpServer;
-  private UDPClient udpClient;
+  private UDPConnection udpConnection;
   private TCPServer tcpServer;
-  private TCPClient tcpClient;
+  private TCPConnection tcpConnection;
   private ZeusGame zeusGame;
   private Shell shell;
 
-  public CommandInterpreter(UDPServer udpServer, UDPClient udpClient,
-                            TCPServer tcpServer, TCPClient tcpClient,
+  public CommandInterpreter(UDPServer udpServer, UDPConnection udpConnection,
+                            TCPServer tcpServer, TCPConnection tcpConnection,
                             ZeusGame zeusGame, Shell shell) {
     this.udpServer = udpServer;
-    this.udpClient = udpClient;
+    this.udpConnection = udpConnection;
     this.tcpServer = tcpServer;
-    this.tcpClient = tcpClient;
+    this.tcpConnection = tcpConnection;
     this.zeusGame = zeusGame;
     this.shell = shell;
   }

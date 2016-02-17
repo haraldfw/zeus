@@ -28,7 +28,7 @@ public class Player {
     this.username = username;
   }
 
-  public void integrate(float delta, Tile[][] tiles) {
+  public void integrate(float delta) {
     pos.mulAdd(vel, delta);
     force.scl(invmass);
     vel.mulAdd(force, delta);
