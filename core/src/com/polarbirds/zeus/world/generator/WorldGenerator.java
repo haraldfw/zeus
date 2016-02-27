@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.polarbirds.zeus.world.Tile;
 import com.smokebox.lib.pcg.dungeon.Cell;
 import com.smokebox.lib.pcg.dungeon.RoomSpreadDungeon;
+import com.smokebox.lib.pcg.dungeon.RoomSpreadNew;
 import com.smokebox.lib.pcg.dungeon.RoomsWithTree;
 import com.smokebox.lib.utils.geom.Rectangle;
 
@@ -25,13 +26,36 @@ public class WorldGenerator {
       case HUB:
         return getHub();
       case DUNGEON:
-        return getDungeon();
+        return getDungeon2();
     }
     return getHub();
   }
 
+  private static World getDungeon2() {
+    int amountOfCells = 10;
+    float xSpread = 1;
+    float ySpread = 1;
+    float roomDimScalar = 2;
+    float maxRoomRatio = 2;
+    int[][] map = RoomSpreadNew.getNew(amountOfCells, xSpread, ySpread, roomDimScalar, maxRoomRatio, new Random(10));
+    Tile[][] tiles = new Tile[map.length][map[0].length];
+    for (int x = 0; x < map.length; x++) {
+      for (int y = 0; y < map[0].length; y++) {
+        tiles[x][y] =
+            map[x][y] == 1 ? new Tile(Tile.TileCollision.FLOOR, Tile.TileGraphic.FLOOR_BASIC)
+                           : new Tile(Tile.TileCollision.WALL, Tile.TileGraphic.WALL_BASIC);
+      }
+    }
+    Vector2 spawn = new Vector2(0, 0);
+    HashMap<Tile.TileGraphic, Texture> textures = new HashMap<>();
+    textures.put(Tile.TileGraphic.FLOOR_BASIC, new Texture("data/hub_floor.png"));
+    textures.put(Tile.TileGraphic.WALL_SIDE, new Texture("data/hub_wall_side.png"));
+    textures.put(Tile.TileGraphic.WALL_BASIC, new Texture("data/hub_wall_top.png"));
+    return new World(spawn, tiles, textures);
+  }
+
   private static World getDungeon() {
-    RoomsWithTree roomsWithTree = RoomSpreadDungeon.roomSpreadFloor(50, 5, 5, new Random(0));
+    RoomsWithTree roomsWithTree = RoomSpreadDungeon.roomSpreadFloor(100, 5, 5, new Random(0));
     int[] bounds = RoomSpreadDungeon.findBounds(roomsWithTree.rooms);
     // make tile-array with found bounds
     Tile[][] tiles = new Tile[bounds[2] - bounds[0]][bounds[3] - bounds[1]];
