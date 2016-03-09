@@ -53,7 +53,7 @@ public class UDPServer implements Runnable {
         }
       }
       byte[] recId = new byte[4];
-      System.arraycopy(packet, 0, recId, 0, 4);
+      System.arraycopy(packet.getData(), 0, recId, 0, 4);
       if(Arrays.equals(ByteBuffer.wrap(recId).array(), ID_BYTES)) {
         String msg = new String(packet.getData());
         if (msg.trim().equalsIgnoreCase("ping")) {

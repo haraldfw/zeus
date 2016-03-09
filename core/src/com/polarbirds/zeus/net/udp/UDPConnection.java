@@ -15,6 +15,7 @@ public class UDPConnection extends Thread {
   private static final int PORT = 6767;
   DatagramSocket socket;
   InetAddress ipAddress;
+  private boolean stayConnected = true;
 
   public UDPConnection(String ipAddress) {
     try {
@@ -28,7 +29,7 @@ public class UDPConnection extends Thread {
   }
 
   public void run() {
-    while (true) {
+    while (stayConnected) {
       byte[] data = new byte[1024];
       DatagramPacket packet = new DatagramPacket(data, data.length);
       try {
@@ -47,5 +48,9 @@ public class UDPConnection extends Thread {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public void disconnect() {
+    stayConnected = false;
   }
 }

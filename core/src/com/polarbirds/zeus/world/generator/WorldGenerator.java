@@ -36,8 +36,9 @@ public class WorldGenerator {
     float xSpread = 1;
     float ySpread = 1;
     float roomDimScalar = 2;
+    int corridorWidth = 3;
     float maxRoomRatio = 2;
-    int[][] map = RoomSpreadNew.getNew(amountOfCells, xSpread, ySpread, roomDimScalar, maxRoomRatio, new Random(10));
+    int[][] map = RoomSpreadNew.getNew(amountOfCells, xSpread, ySpread, roomDimScalar, corridorWidth, maxRoomRatio, new Random(10));
     Tile[][] tiles = new Tile[map.length][map[0].length];
     for (int x = 0; x < map.length; x++) {
       for (int y = 0; y < map[0].length; y++) {
